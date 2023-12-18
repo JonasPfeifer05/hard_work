@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hard_work/pages/edit_workout.dart';
 import 'package:hard_work/pages/theme_test.dart';
 import 'package:hard_work/services/theme_model.dart';
 import 'package:provider/provider.dart';
@@ -17,12 +18,11 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
       initialRoute: "/theme-test",
-      routes: {"/theme-test": (context) => const ThemeTest()},
+      routes: {
+        "/theme-test": (context) => const ThemeTest(),
+        "/edit-workout": (context) => const EditWorkout()
+      },
     );
   }
 }
