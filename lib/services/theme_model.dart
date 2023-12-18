@@ -28,10 +28,20 @@ class ThemeModel with ChangeNotifier {
   }
 
   void setToLightMode() {
+    fontColor = const Color.fromARGB(255, 255, 255, 255);
+    backgroundOne = const Color.fromARGB(255, 233, 233, 233);
+    backgroundTwo = const Color.fromARGB(255, 181, 181, 181);
+    backgroundThree = const Color.fromARGB(255, 120, 120, 120);
+    highlight = const Color.fromARGB(255, 20, 178, 184);
     _isDarkMode = false;
   }
 
-  bool isDarkMode() {
-    return _isDarkMode;
+  void switchTheme() {
+    if (_isDarkMode) {
+      setToLightMode();
+    } else {
+      setToDarkMode();
+    }
+    notifyListeners();
   }
 }

@@ -9,6 +9,12 @@ class ThemeTest extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          context.read<ThemeModel>().switchTheme();
+        },
+        child: const Icon(Icons.swap_horiz),
+      ),
       body: Column(
         children: [
           Expanded(
