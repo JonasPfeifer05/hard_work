@@ -37,11 +37,7 @@ class ThemeModel with ChangeNotifier {
   }
 
   void switchTheme() {
-    if (_isDarkMode) {
-      setToLightMode();
-    } else {
-      setToDarkMode();
-    }
+    _isDarkMode ? setToLightMode() : setToDarkMode();
     notifyListeners();
   }
 }
