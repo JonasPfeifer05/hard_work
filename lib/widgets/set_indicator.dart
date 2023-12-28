@@ -6,8 +6,9 @@ import '../services/theme_model.dart';
 
 class SetIndicator extends StatelessWidget {
   final SetHistory? setHistory;
+  final VoidCallback? onDelete;
 
-  const SetIndicator({super.key, this.setHistory});
+  const SetIndicator({super.key, this.setHistory, this.onDelete});
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +20,7 @@ class SetIndicator extends StatelessWidget {
   Widget generateHeader(BuildContext context) {
     return Row(
       children: [
-        Expanded(flex: 1, child: Container()),
+        Expanded(flex: 2, child: Container()),
         Expanded(
           flex: 10,
           child: Text(
@@ -61,12 +62,11 @@ class SetIndicator extends StatelessWidget {
     return Row(
       children: [
         Expanded(
-          flex: 1,
-          child: Center(
-            child: IconButton(
-                onPressed: () {},
-                icon: const Icon(Icons.delete_forever),
-                color: Colors.redAccent),
+          flex: 2,
+          child: IconButton(
+            onPressed: onDelete,
+            icon: const Icon(Icons.delete_forever),
+            color: Colors.redAccent,
           ),
         ),
         Expanded(

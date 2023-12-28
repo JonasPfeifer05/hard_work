@@ -70,15 +70,35 @@ class _EditWorkoutState extends State<EditWorkout> {
           child: ListView.builder(
             itemCount: loading ? 0 : exercises.length + 1,
             itemBuilder: (context, index) => index < exercises.length
-                ? Exercise(exerciseData: exercises[index])
-                : FractionallySizedBox(
-                    widthFactor: 0.9,
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                          backgroundColor:
-                              context.watch<ThemeModel>().highlight),
-                      onPressed: () {},
-                      child: const Text("Add New Exercise"),
+                ? Exercise(
+                    exerciseData: exercises[index],
+                    onDeleteSet: (setIndex) {
+                      setState(() {
+                        exercises[index].sets.removeAt(setIndex);
+                      });
+                    },
+                    onAddSet: () {
+                      setState(() {
+                        exercises[index].sets.add(SetHistory([]));
+                      });
+                    },
+                    onDelete: () {
+                      setState(() {
+                        exercises.removeAt(index);
+                      });
+                    },
+                  )
+                : Padding(
+                    padding: const EdgeInsets.only(top: 25.0),
+                    child: FractionallySizedBox(
+                      widthFactor: 0.9,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor:
+                                context.watch<ThemeModel>().highlight),
+                        onPressed: () {},
+                        child: const Text("Add New Exercise"),
+                      ),
                     ),
                   ),
           ),
