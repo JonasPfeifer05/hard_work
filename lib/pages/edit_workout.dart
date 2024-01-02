@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hard_work/services/edit_workout_data.dart';
 import 'package:hard_work/services/exercise_data.dart';
 import 'package:hard_work/widgets/Exercise.dart';
+import 'package:hard_work/widgets/select_exercise_modal_sheet.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:provider/provider.dart';
 
@@ -89,14 +90,28 @@ class _EditWorkoutState extends State<EditWorkout> {
                     },
                   )
                 : Padding(
-                    padding: const EdgeInsets.only(top: 25.0),
+                    padding: const EdgeInsets.symmetric(vertical: 25.0),
                     child: FractionallySizedBox(
                       widthFactor: 0.9,
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
                             backgroundColor:
                                 context.watch<ThemeModel>().highlight),
-                        onPressed: () {},
+                        onPressed: () async {
+                          var exercise = (await showModalBottomSheet(
+                            context: context,
+                            builder: (context) {
+                              return const SelectExerciseModalSheet();
+                            },
+                          )) as String?;
+
+                          if (exercise != null) {
+                            setState(() {
+                              exercises.add(
+                                  ExerciseData(exercise, [SetHistory([])]));
+                            });
+                          }
+                        },
                         child: const Text("Add New Exercise"),
                       ),
                     ),
