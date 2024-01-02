@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:hard_work/services/edit_workout_data.dart';
 import 'package:hard_work/services/exercise_data.dart';
+import 'package:hard_work/services/want_to_save_decision.dart';
 import 'package:hard_work/widgets/Exercise.dart';
 import 'package:hard_work/widgets/select_exercise_modal_sheet.dart';
+import 'package:hard_work/widgets/want_to_save_modal_sheet.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:provider/provider.dart';
 
@@ -52,6 +54,25 @@ class _EditWorkoutState extends State<EditWorkout> {
 
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () async {
+            var decision = (await showModalBottomSheet(
+              context: context,
+              builder: (context) {
+                return const WantToSaveModalSheet();
+              },
+            )) as WantToSaveDecision?;
+
+            if (decision == WantToSaveDecision.discard) {
+              Navigator.pop(context);
+            } else if (decision == WantToSaveDecision.save) {
+              // TODO Save to firebase
+              await Future.delayed(const Duration(milliseconds: 500));
+              Navigator.pop(context);
+            }
+          },
+        ),
         iconTheme: IconThemeData(color: context.watch<ThemeModel>().fontColor),
         titleTextStyle: Theme.of(context)
             .textTheme

@@ -22,7 +22,7 @@ class _SelectExerciseModalSheetState extends State<SelectExerciseModalSheet> {
   }
 
   void asyncInitState() async {
-    // Fetch exercises
+    // TODO Fetch exercises
     await Future.delayed(const Duration(milliseconds: 500));
 
     setState(() {
