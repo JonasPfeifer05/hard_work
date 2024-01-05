@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "760204081812",
+    "firebase_url": "https://hard-work-4ahif-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "hard-work-4ahif",
+    "storage_bucket": "hard-work-4ahif.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:760204081812:android:4f43065396dbbc53c89281",
+        "android_client_info": {
+          "package_name": "com.example.hard_work"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCv-VzSnRFux0ebll-ozHP-y7B4HWqP2Ks"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
