@@ -18,24 +18,31 @@ class WorkOut extends StatelessWidget {
               .backgroundTwo,
           borderRadius: BorderRadius.circular(15)),
       margin: const EdgeInsets.all(20),
-      padding: const EdgeInsets.all(10),
-      child: GridTile(
-        header: Center(
-            child: Text(
-              data.name,
-              style: TextStyle(color: context
-                  .watch<ThemeModel>()
-                  .fontColor, fontSize: 20),
-            )),
-        child: Container(
-          margin: const EdgeInsetsDirectional.only(top: 40),
-          child: Column(
-            children: [
-              for (var value in data.exercises) Text(value, style: TextStyle(color: context.watch<ThemeModel>().fontColor),)
-            ],
+      child: RawMaterialButton(
+        onPressed: () { editWorkOut(); },
+        child: GridTile(
+          header: Center(
+              child: Container(
+                margin: const EdgeInsets.only(top: 10),
+                child: Text(
+                  data.name,
+                  style: TextStyle(color: context
+                      .watch<ThemeModel>()
+                      .fontColor, fontSize: 20),
+                ),
+              )),
+          child: Container(
+            margin: const EdgeInsetsDirectional.only(top: 40),
+            child: Column(
+              children: [
+                for (var value in data.exercises) Text(value, style: TextStyle(color: context.watch<ThemeModel>().fontColor, fontSize: 15),)
+              ],
+            ),
           ),
         ),
       ),
     );
   }
+
+  void editWorkOut() {}
 }
