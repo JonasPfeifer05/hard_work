@@ -27,5 +27,7 @@ class PlaceHolderWorkout extends StatelessWidget {
     );
   }
 
-  void addNewWorkout() {}
+  void addNewWorkout() {
+    // TODO add a new workout; should i do this with a modal bottom sheet or differently?
+  }
 }

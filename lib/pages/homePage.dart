@@ -53,7 +53,7 @@ class _HomePageState extends State<HomePage> {
       backgroundColor: context.watch<ThemeModel>().backgroundOne,
       appBar: AppBar(
         leading: Text(
-          // Just temporary; logo should be used there
+          // TODO Just temporary; logo should be used there
           "PLACEHOLDER",
           style: TextStyle(color: context.watch<ThemeModel>().fontColor),
         ),
@@ -81,7 +81,7 @@ class _HomePageState extends State<HomePage> {
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2),
           itemBuilder: (BuildContext context, int index) {
-            if (loading) return null;       // display add button when not finished loading???
+            if (loading) return null;       // TODO Question: display add button when not finished loading???
             if (index >= workouts.length) {
               return const PlaceHolderWorkout();
             }
@@ -93,5 +93,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  void navigateToStatistics() {}
+  void navigateToStatistics() {
+    // TODO navigate to Statistics
+  }
 }
