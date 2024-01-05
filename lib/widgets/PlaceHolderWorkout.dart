@@ -10,7 +10,7 @@ class PlaceHolderWorkout extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-          color: context.watch<ThemeModel>().backgroundOne,
+          color: context.watch<ThemeModel>().backgroundTwo,
           borderRadius: BorderRadius.circular(15)),
       margin: const EdgeInsets.all(20),
       child: RawMaterialButton(

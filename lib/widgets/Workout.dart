@@ -15,19 +15,20 @@ class WorkOut extends StatelessWidget {
       decoration: BoxDecoration(
           color: context
               .watch<ThemeModel>()
-              .backgroundOne,
+              .backgroundTwo,
           borderRadius: BorderRadius.circular(15)),
       margin: const EdgeInsets.all(20),
+      padding: const EdgeInsets.all(10),
       child: GridTile(
         header: Center(
             child: Text(
               data.name,
               style: TextStyle(color: context
                   .watch<ThemeModel>()
-                  .fontColor),
+                  .fontColor, fontSize: 20),
             )),
         child: Container(
-          margin: const EdgeInsetsDirectional.only(top: 30),
+          margin: const EdgeInsetsDirectional.only(top: 40),
           child: Column(
             children: [
               for (var value in data.exercises) Text(value, style: TextStyle(color: context.watch<ThemeModel>().fontColor),)
