@@ -4,7 +4,9 @@ import 'package:provider/provider.dart';
 import '../services/theme_model.dart';
 
 class PlaceHolderWorkout extends StatelessWidget {
-  const PlaceHolderWorkout({super.key});
+  const PlaceHolderWorkout({super.key, required this.showWorkoutBottomSheet});
+
+  final Function showWorkoutBottomSheet;
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +17,7 @@ class PlaceHolderWorkout extends StatelessWidget {
       margin: const EdgeInsets.all(20),
       child: RawMaterialButton(
         onPressed: () {
-          addNewWorkout();
+          showWorkoutBottomSheet();
         },
         child: GridTile(
           child: Center(
@@ -25,9 +27,5 @@ class PlaceHolderWorkout extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  void addNewWorkout() {
-    // TODO add a new workout; should i do this with a modal bottom sheet or differently?
   }
 }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../services/WorkoutData.dart';
+import '../services/workout_data.dart';
 import '../services/theme_model.dart';
 
 class WorkOut extends StatelessWidget {
@@ -28,7 +28,7 @@ class WorkOut extends StatelessWidget {
                   data.name,
                   style: TextStyle(color: context
                       .watch<ThemeModel>()
-                      .fontColor, fontSize: 20),
+                      .fontColor, fontSize: 18),
                 ),
               )),
           child: Container(

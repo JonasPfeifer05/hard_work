@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:hard_work/services/WorkoutData.dart';
-import 'package:hard_work/widgets/PlaceHolderWorkout.dart';
-import 'package:hard_work/widgets/Workout.dart';
+import 'package:hard_work/services/workout_creation_bottomsheet.dart';
+import 'package:hard_work/services/workout_data.dart';
+import 'package:hard_work/widgets/placeholder_workout.dart';
+import 'package:hard_work/widgets/workout.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:provider/provider.dart';
 
@@ -31,7 +32,6 @@ class _HomePageState extends State<HomePage> {
         loading = false;
       });
     });
-
   }
 
   Future<List<WorkoutData>> fetchWorkouts() async {
@@ -81,9 +81,12 @@ class _HomePageState extends State<HomePage> {
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2),
           itemBuilder: (BuildContext context, int index) {
-            if (loading) return null;       // TODO Question: display add button when not finished loading???
+            if (loading)
+              return null; // TODO Question: display add button when not finished loading???
             if (index >= workouts.length) {
-              return const PlaceHolderWorkout();
+              return PlaceHolderWorkout(
+                showWorkoutBottomSheet: showWorkoutBottomSheet,
+              );
             }
             return WorkOut(data: workouts[index]);
           },
@@ -95,5 +98,17 @@ class _HomePageState extends State<HomePage> {
 
   void navigateToStatistics() {
     // TODO navigate to Statistics
+  }
+
+  void addWorkout(WorkoutData value) {
+    workouts.add(value);
+    setState(() {});
+  }
+
+  void showWorkoutBottomSheet() {
+    showModalBottomSheet(
+      context: context,
+      builder: (context) => WorkoutCreationBottomSheet(addItem: addWorkout),
+    );
   }
 }
