@@ -9,7 +9,7 @@ import 'package:provider/provider.dart';
 import '../services/theme_model.dart';
 
 class HomePage extends StatefulWidget {
-  HomePage({super.key});
+  const HomePage({super.key});
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -81,8 +81,9 @@ class _HomePageState extends State<HomePage> {
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2),
           itemBuilder: (BuildContext context, int index) {
-            if (loading)
+            if (loading) {
               return null; // TODO Question: display add button when not finished loading???
+            }
             if (index >= workouts.length) {
               return PlaceHolderWorkout(
                 showWorkoutBottomSheet: showWorkoutBottomSheet,
@@ -97,12 +98,14 @@ class _HomePageState extends State<HomePage> {
   }
 
   void navigateToStatistics() {
+    Navigator.pushNamed(context, "statistics");
     // TODO navigate to Statistics
   }
 
   void addWorkout(WorkoutData value) {
-    workouts.add(value);
-    setState(() {});
+    setState(() {
+      workouts.add(value);
+    });
   }
 
   void showWorkoutBottomSheet() {
