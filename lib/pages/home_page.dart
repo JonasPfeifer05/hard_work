@@ -64,7 +64,12 @@ class _HomePageState extends State<HomePage> {
                 navigateToStatistics();
               },
               icon: Icon(Icons.stacked_line_chart_rounded,
-                  color: context.watch<ThemeModel>().fontColor))
+                  color: context.watch<ThemeModel>().fontColor)),
+          IconButton(
+            onPressed: () {
+              navigateToSettings();
+            }, icon: Icon(Icons.settings, color: context.watch<ThemeModel>().fontColor),
+          )
         ],
         title: Text(
           "HardWork",
@@ -98,9 +103,15 @@ class _HomePageState extends State<HomePage> {
   }
 
   void navigateToStatistics() {
-    Navigator.pushNamed(context, "statistics");
+    Navigator.pushNamed(context, "/statistics");
     // TODO navigate to Statistics
   }
+
+  void navigateToSettings() {
+    Navigator.pushNamed(context, "/theme-test");
+    // TODO Question: do we even want to be able to change the color theme like that
+  }
+
 
   void addWorkout(WorkoutData value) {
     setState(() {
@@ -114,4 +125,5 @@ class _HomePageState extends State<HomePage> {
       builder: (context) => WorkoutCreationBottomSheet(addItem: addWorkout),
     );
   }
+
 }

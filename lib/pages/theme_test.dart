@@ -9,6 +9,7 @@ class ThemeTest extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           context.read<ThemeModel>().switchTheme();
