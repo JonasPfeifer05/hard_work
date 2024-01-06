@@ -24,8 +24,6 @@ class _WorkoutCreationBottomSheetState
 
   String errorMessage = "";
 
-  // Data Values
-
   @override
   Widget build(BuildContext context) {
     return Container(

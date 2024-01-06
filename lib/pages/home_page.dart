@@ -68,7 +68,9 @@ class _HomePageState extends State<HomePage> {
           IconButton(
             onPressed: () {
               navigateToSettings();
-            }, icon: Icon(Icons.settings, color: context.watch<ThemeModel>().fontColor),
+            },
+            icon: Icon(Icons.settings,
+                color: context.watch<ThemeModel>().fontColor),
           )
         ],
         title: Text(
@@ -112,7 +114,6 @@ class _HomePageState extends State<HomePage> {
     // TODO Question: do we even want to be able to change the color theme like that
   }
 
-
   void addWorkout(WorkoutData value) {
     setState(() {
       workouts.add(value);
@@ -125,5 +126,4 @@ class _HomePageState extends State<HomePage> {
       builder: (context) => WorkoutCreationBottomSheet(addItem: addWorkout),
     );
   }
-
 }
