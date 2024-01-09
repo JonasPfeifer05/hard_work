@@ -8,12 +8,14 @@ import 'package:hard_work/services/want_to_save_decision.dart';
 import 'package:hard_work/widgets/Exercise.dart';
 import 'package:hard_work/widgets/select_exercise_modal_sheet.dart';
 import 'package:hard_work/widgets/want_to_save_modal_sheet.dart';
+import 'package:hard_work/widgets/yes_no_modal_sheet.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:provider/provider.dart';
 
 import '../services/auth.dart';
 import '../services/database_model.dart';
 import '../services/theme_model.dart';
+import '../services/yes_no_decision.dart';
 
 class EditWorkout extends StatefulWidget {
   const EditWorkout({super.key});
@@ -99,6 +101,28 @@ class _EditWorkoutState extends State<EditWorkout> {
     }
   }
 
+  Future<void> deleteWorkout() async {
+    var decision = (await showModalBottomSheet(
+      context: context,
+      builder: (context) {
+        return const YesNoModalSheet(title: "Do you want to delete it?");
+      },
+    )) as YesNoDecision?;
+
+    if (decision == YesNoDecision.yes) {
+      var database = context.read<DatabaseModel>();
+      var auth = context.read<AuthModel>();
+
+      var path = PathBuilder.forUser(auth.currentUser!.uid)
+          .toWorkouts()
+          .toWorkout(workoutName)
+          .path;
+
+      await database.forPath(path).remove();
+      Navigator.pop(context);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -128,6 +152,13 @@ class _EditWorkoutState extends State<EditWorkout> {
             .headlineMedium!
             .copyWith(color: context.watch<ThemeModel>().fontColor),
         backgroundColor: context.watch<ThemeModel>().backgroundTwo,
+        actions: [
+          IconButton(
+            onPressed: deleteWorkout,
+            icon: const Icon(Icons.delete_forever),
+            color: Colors.redAccent,
+          )
+        ],
         title: Text(workoutName),
       ),
       body: Container(
