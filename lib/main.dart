@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:hard_work/pages/home_page.dart';
+import 'package:hard_work/pages/statistics_page.dart';
 import 'package:hard_work/pages/theme_test.dart';
 import 'package:hard_work/services/theme_model.dart';
 import 'package:provider/provider.dart';
@@ -21,8 +23,12 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      initialRoute: "/theme-test",
-      routes: {"/theme-test": (context) => const ThemeTest()},
+      initialRoute: "/",
+      routes: {
+        "/": (context) => const HomePage(),
+        "/statistics": (context) => const StatisticsPage(),
+        "/theme-test": (context) => const ThemeTest(),
+      },
     );
   }
 }
