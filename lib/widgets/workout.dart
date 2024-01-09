@@ -5,9 +5,10 @@ import '../services/workout_data.dart';
 import '../services/theme_model.dart';
 
 class WorkOut extends StatelessWidget {
-  const WorkOut({super.key, required this.data});
+  const WorkOut({super.key, required this.data, required this.onEdit});
 
-  final WorkoutData data;
+  final WorkoutDescriptor data;
+  final Function(WorkoutDescriptor) onEdit;
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +19,7 @@ class WorkOut extends StatelessWidget {
       margin: const EdgeInsets.all(20),
       child: RawMaterialButton(
         onPressed: () {
-          editWorkOut();
+          onEdit(data);
         },
         child: GridTile(
           header: Center(
@@ -34,12 +35,14 @@ class WorkOut extends StatelessWidget {
             margin: const EdgeInsetsDirectional.only(top: 40),
             child: Column(
               children: [
-                // TODO implement the use of Exercise not just text
                 for (var value in data.exercises)
                   Text(
                     value,
                     style: TextStyle(
-                        color: context.watch<ThemeModel>().fontColor,
+                        color: context
+                            .watch<ThemeModel>()
+                            .fontColor!
+                            .withAlpha(50),
                         fontSize: 15),
                   )
               ],
@@ -48,9 +51,5 @@ class WorkOut extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  void editWorkOut() {
-    // TODO navigate to page to edit the Workout
   }
 }

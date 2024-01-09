@@ -1,5 +1,11 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:hard_work/pages/edit_workout_page.dart';
+import 'package:hard_work/pages/home_page.dart';
+import 'package:hard_work/pages/login_register_page.dart';
+import 'package:hard_work/pages/statistics_page.dart';
 import 'package:hard_work/pages/theme_test.dart';
+import 'package:hard_work/services/auth.dart';
 import 'package:hard_work/services/theme_model.dart';
 import 'package:provider/provider.dart';
 
@@ -46,7 +52,7 @@ class MyApp extends StatelessWidget {
       routes: {
         "/theme-test": (context) => const ThemeTest(),
         "/edit-workout": (context) => const EditWorkout(),
-        "/home": (context) => const HomePage(),
+        "/": (context) => const HomePage(),
         "/statistics": (context) => const StatisticsPage(),
       },
     );

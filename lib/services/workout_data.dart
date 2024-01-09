@@ -1,11 +1,8 @@
 import 'dart:core';
 
-class WorkoutData {
-
+class WorkoutDescriptor {
   final String name;
-  final List<String> exercises; // TODO just temporary; should be a list of exercises
+  final List<String> exercises;
 
-  WorkoutData(this.name, this.exercises);
-
-
+  WorkoutDescriptor(this.name, this.exercises);
 }

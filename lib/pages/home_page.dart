@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hard_work/services/workout_creation_bottomsheet.dart';
+import 'package:hard_work/widgets/workout_creation_bottomsheet.dart';
 import 'package:hard_work/services/workout_data.dart';
 import 'package:hard_work/widgets/placeholder_workout.dart';
 import 'package:hard_work/widgets/workout.dart';
@@ -16,8 +16,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  late List<WorkoutData> workouts = [];
-
+  List<WorkoutDescriptor> workouts = [];
   bool loading = true;
 
   @override
@@ -27,23 +26,22 @@ class _HomePageState extends State<HomePage> {
   }
 
   void asyncInitState() async {
-    workouts = await fetchWorkouts().whenComplete(() {
-      setState(() {
-        loading = false;
-      });
+    workouts = await fetchWorkouts();
+    setState(() {
+      loading = false;
     });
   }
 
-  Future<List<WorkoutData>> fetchWorkouts() async {
+  Future<List<WorkoutDescriptor>> fetchWorkouts() async {
     // TODO with HTTP Requests
     await Future.delayed(const Duration(seconds: 2));
 
     return [
-      WorkoutData("Legday", ["exercise 1", "exercise 2"]),
-      WorkoutData("Legday", ["exercise 1", "exercise 2"]),
-      WorkoutData("Legday", ["exercise 1", "exercise 2"]),
-      WorkoutData("Legday", ["exercise 1", "exercise 2"]),
-      WorkoutData("Legday", ["exercise 1", "exercise 2"]),
+      WorkoutDescriptor("Legday", ["exercise 1", "exercise 2"]),
+      WorkoutDescriptor("Legday", ["exercise 1", "exercise 2"]),
+      WorkoutDescriptor("Legday", ["exercise 1", "exercise 2"]),
+      WorkoutDescriptor("Legday", ["exercise 1", "exercise 2"]),
+      WorkoutDescriptor("Legday", ["exercise 1", "exercise 2"]),
     ];
   }
 
@@ -52,30 +50,26 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       backgroundColor: context.watch<ThemeModel>().backgroundOne,
       appBar: AppBar(
-        leading: Text(
-          // TODO Just temporary; logo should be used there
-          "PLACEHOLDER",
-          style: TextStyle(color: context.watch<ThemeModel>().fontColor),
-        ),
+        leading: const Icon(Icons.fitness_center),
         backgroundColor: context.watch<ThemeModel>().backgroundTwo,
         actions: [
           IconButton(
-              onPressed: () {
-                navigateToStatistics();
-              },
-              icon: Icon(Icons.stacked_line_chart_rounded,
-                  color: context.watch<ThemeModel>().fontColor)),
+            onPressed: navigateToStatistics,
+            icon: Icon(Icons.stacked_line_chart_rounded,
+                color: context.watch<ThemeModel>().fontColor),
+          ),
           IconButton(
-            onPressed: () {
-              navigateToSettings();
-            },
+            onPressed: navigateToSettings,
             icon: Icon(Icons.settings,
                 color: context.watch<ThemeModel>().fontColor),
           )
         ],
         title: Text(
           "HardWork",
-          style: TextStyle(color: context.watch<ThemeModel>().fontColor),
+          style: Theme.of(context)
+              .textTheme
+              .headlineMedium!
+              .copyWith(color: context.watch<ThemeModel>().fontColor),
         ),
       ),
       body: ModalProgressHUD(
@@ -89,14 +83,19 @@ class _HomePageState extends State<HomePage> {
               crossAxisCount: 2),
           itemBuilder: (BuildContext context, int index) {
             if (loading) {
-              return null; // TODO Question: display add button when not finished loading???
+              return null;
             }
-            if (index >= workouts.length) {
+
+            if (index == workouts.length) {
               return PlaceHolderWorkout(
                 showWorkoutBottomSheet: showWorkoutBottomSheet,
               );
             }
-            return WorkOut(data: workouts[index]);
+
+            return WorkOut(
+              data: workouts[index],
+              onEdit: onEditWorkout,
+            );
           },
           itemCount: workouts.length + 1,
         ),
@@ -106,24 +105,33 @@ class _HomePageState extends State<HomePage> {
 
   void navigateToStatistics() {
     Navigator.pushNamed(context, "/statistics");
-    // TODO navigate to Statistics
   }
 
   void navigateToSettings() {
     Navigator.pushNamed(context, "/theme-test");
-    // TODO Question: do we even want to be able to change the color theme like that
   }
 
-  void addWorkout(WorkoutData value) {
+  void onEditWorkout(WorkoutDescriptor workoutData) {
+    // TODO Navigate to matching workout
+    Navigator.pushNamed(context, "/edit-workout");
+  }
+
+  void addWorkout(WorkoutDescriptor value) {
     setState(() {
       workouts.add(value);
     });
   }
 
-  void showWorkoutBottomSheet() {
-    showModalBottomSheet(
+  void showWorkoutBottomSheet() async {
+    var newWorkout = await showModalBottomSheet(
       context: context,
-      builder: (context) => WorkoutCreationBottomSheet(addItem: addWorkout),
-    );
+      builder: (context) => const WorkoutCreationBottomSheet(),
+    ) as String?;
+
+    if (newWorkout != null) {
+      setState(() {
+        workouts.add(WorkoutDescriptor(newWorkout, []));
+      });
+    }
   }
 }
