@@ -28,8 +28,7 @@ class ThemeModel with ChangeNotifier {
   }
 
   void setToLightMode() {
-    fontColor = const Color.fromARGB(255, 0, 0, 0);             // TODO Question: why is the FontColor for Light-Mode white???
-    // fontColor = const Color.fromARGB(255, 255, 255, 255);
+    fontColor = const Color.fromARGB(255, 255, 255, 255);
     backgroundOne = const Color.fromARGB(255, 233, 233, 233);
     backgroundTwo = const Color.fromARGB(255, 181, 181, 181);
     backgroundThree = const Color.fromARGB(255, 120, 120, 120);
