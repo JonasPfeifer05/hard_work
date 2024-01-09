@@ -6,6 +6,7 @@ import 'package:hard_work/pages/login_register_page.dart';
 import 'package:hard_work/pages/statistics_page.dart';
 import 'package:hard_work/pages/theme_test.dart';
 import 'package:hard_work/services/auth.dart';
+import 'package:hard_work/services/database_model.dart';
 import 'package:hard_work/services/theme_model.dart';
 import 'package:provider/provider.dart';
 
@@ -19,6 +20,7 @@ Future<void> main() async {
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider(create: (_) => ThemeModel.darkMode()),
     ChangeNotifierProvider(create: (_) => AuthModel()),
+    ChangeNotifierProvider(create: (_) => DatabaseModel()),
   ], child: const PageTree()));
 }
 

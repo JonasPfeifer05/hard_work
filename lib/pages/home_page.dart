@@ -1,3 +1,6 @@
+import 'dart:convert';
+
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:hard_work/widgets/workout_creation_bottomsheet.dart';
 import 'package:hard_work/services/workout_data.dart';
@@ -6,6 +9,8 @@ import 'package:hard_work/widgets/workout.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:provider/provider.dart';
 
+import '../services/auth.dart';
+import '../services/database_model.dart';
 import '../services/theme_model.dart';
 
 class HomePage extends StatefulWidget {
@@ -33,16 +38,25 @@ class _HomePageState extends State<HomePage> {
   }
 
   Future<List<WorkoutDescriptor>> fetchWorkouts() async {
-    // TODO with HTTP Requests
-    await Future.delayed(const Duration(seconds: 2));
+    var database = context.read<DatabaseModel>();
+    var auth = context.read<AuthModel>();
+    var result = await database
+        .forPath(
+          PathBuilder.forUser(auth.currentUser!.uid).toWorkouts().path,
+        )
+        .get();
 
-    return [
-      WorkoutDescriptor("Legday", ["exercise 1", "exercise 2"]),
-      WorkoutDescriptor("Legday", ["exercise 1", "exercise 2"]),
-      WorkoutDescriptor("Legday", ["exercise 1", "exercise 2"]),
-      WorkoutDescriptor("Legday", ["exercise 1", "exercise 2"]),
-      WorkoutDescriptor("Legday", ["exercise 1", "exercise 2"]),
-    ];
+    List<WorkoutDescriptor> descriptors = [];
+    for (DataSnapshot workout in result.children) {
+      descriptors.add(WorkoutDescriptor(
+          workout.key!,
+          workout.children
+              .where((e) => e.key != "_")
+              .map((e) => e.key!)
+              .toList()));
+    }
+
+    return descriptors;
   }
 
   @override
@@ -111,15 +125,10 @@ class _HomePageState extends State<HomePage> {
     Navigator.pushNamed(context, "/theme-test");
   }
 
-  void onEditWorkout(WorkoutDescriptor workoutData) {
-    // TODO Navigate to matching workout
-    Navigator.pushNamed(context, "/edit-workout");
-  }
-
-  void addWorkout(WorkoutDescriptor value) {
-    setState(() {
-      workouts.add(value);
-    });
+  void onEditWorkout(WorkoutDescriptor workoutData) async {
+    await Navigator.pushNamed(context, "/edit-workout",
+        arguments: workoutData.name);
+    asyncInitState();
   }
 
   void showWorkoutBottomSheet() async {
@@ -128,7 +137,18 @@ class _HomePageState extends State<HomePage> {
       builder: (context) => const WorkoutCreationBottomSheet(),
     ) as String?;
 
-    if (newWorkout != null) {
+    if (newWorkout != null &&
+        workouts.where((element) => element.name == newWorkout).isEmpty) {
+      var database = context.read<DatabaseModel>();
+      var auth = context.read<AuthModel>();
+
+      var path = PathBuilder.forUser(auth.currentUser!.uid)
+          .toWorkouts()
+          .toWorkout(newWorkout)
+          .path;
+
+      await database.forPath(path).set({"_": "_"});
+
       setState(() {
         workouts.add(WorkoutDescriptor(newWorkout, []));
       });
