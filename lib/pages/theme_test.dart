@@ -9,7 +9,15 @@ class ThemeTest extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        actions: [
+          IconButton(
+              onPressed: () {
+                Navigator.pushNamed(context, "/edit-workout");
+              },
+              icon: const Icon(Icons.arrow_forward))
+        ],
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           context.read<ThemeModel>().switchTheme();
