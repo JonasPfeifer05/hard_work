@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:hard_work/services/theme_model.dart';
 import 'package:provider/provider.dart';
 
+import '../services/database_model.dart';
+
 class SelectExerciseModalSheet extends StatefulWidget {
   const SelectExerciseModalSheet({super.key});
 
@@ -22,17 +24,15 @@ class _SelectExerciseModalSheetState extends State<SelectExerciseModalSheet> {
   }
 
   void asyncInitState() async {
-    // TODO Fetch exercises
-    await Future.delayed(const Duration(milliseconds: 500));
+    var database = context.read<DatabaseModel>();
+
+    var result = await database.forPath("exercises").get();
+
+    exercises =
+        (result.value! as String).split(",").map((e) => e.trim()).toList();
 
     setState(() {
       loading = false;
-      exercises = [
-        "Bulgarian Splits",
-        "Bench-press",
-        "Butterfly",
-        "Hammer-curl"
-      ];
       selected = exercises.first;
     });
   }

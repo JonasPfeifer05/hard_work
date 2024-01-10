@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:hard_work/widgets/workout_creation_bottomsheet.dart';
@@ -42,7 +40,7 @@ class _HomePageState extends State<HomePage> {
     var auth = context.read<AuthModel>();
     var result = await database
         .forPath(
-          PathBuilder.forUser(auth.currentUser!.uid).toWorkouts().path,
+          UserPathBuilder.forUser(auth.currentUser!.uid).toWorkouts().path,
         )
         .get();
 
@@ -142,7 +140,7 @@ class _HomePageState extends State<HomePage> {
       var database = context.read<DatabaseModel>();
       var auth = context.read<AuthModel>();
 
-      var path = PathBuilder.forUser(auth.currentUser!.uid)
+      var path = UserPathBuilder.forUser(auth.currentUser!.uid)
           .toWorkouts()
           .toWorkout(newWorkout)
           .path;

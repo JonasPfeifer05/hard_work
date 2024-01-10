@@ -9,31 +9,31 @@ class DatabaseModel with ChangeNotifier {
   }
 }
 
-class PathBuilder {
+class UserPathBuilder {
   String path = "";
 
-  PathBuilder._();
+  UserPathBuilder._();
 
-  PathBuilder.forUser(String userID) {
+  UserPathBuilder.forUser(String userID) {
     path = userID;
   }
 
-  PathBuilder toWorkouts() {
+  UserPathBuilder toWorkouts() {
     path += "/workouts";
     return this;
   }
 
-  PathBuilder toWorkout(String workoutName) {
+  UserPathBuilder toWorkout(String workoutName) {
     path += "/$workoutName";
     return this;
   }
 
-  PathBuilder toExercises() {
+  UserPathBuilder toExercises() {
     path += "/exercises";
     return this;
   }
 
-  PathBuilder toExercise(String exerciseName) {
+  UserPathBuilder toExercise(String exerciseName) {
     path += "/$exerciseName";
     return this;
   }
