@@ -44,7 +44,7 @@ class _EditWorkoutState extends State<EditWorkout> {
       var database = context.read<DatabaseModel>();
       var auth = context.read<AuthModel>();
 
-      var path = PathBuilder.forUser(auth.currentUser!.uid)
+      var path = UserPathBuilder.forUser(auth.currentUser!.uid)
           .toWorkouts()
           .toWorkout(workoutName)
           .path;
@@ -87,7 +87,7 @@ class _EditWorkoutState extends State<EditWorkout> {
     var database = context.read<DatabaseModel>();
     var auth = context.read<AuthModel>();
 
-    var path = PathBuilder.forUser(auth.currentUser!.uid)
+    var path = UserPathBuilder.forUser(auth.currentUser!.uid)
         .toWorkouts()
         .toWorkout(workoutName)
         .path;
@@ -113,7 +113,7 @@ class _EditWorkoutState extends State<EditWorkout> {
       var database = context.read<DatabaseModel>();
       var auth = context.read<AuthModel>();
 
-      var path = PathBuilder.forUser(auth.currentUser!.uid)
+      var path = UserPathBuilder.forUser(auth.currentUser!.uid)
           .toWorkouts()
           .toWorkout(workoutName)
           .path;
