@@ -49,6 +49,7 @@ class _LoginRegisterPageState extends State<LoginRegisterPage> {
                       child: SizedBox(
                         width: 250,
                         child: TextField(
+                          cursorColor: context.watch<ThemeModel>().highlight,
                           keyboardType: TextInputType.emailAddress,
                           controller: emailController,
                           decoration: InputDecoration(
@@ -83,6 +84,7 @@ class _LoginRegisterPageState extends State<LoginRegisterPage> {
                       child: SizedBox(
                         width: 250,
                         child: TextField(
+                          cursorColor: context.watch<ThemeModel>().highlight,
                           obscureText: true,
                           enableSuggestions: false,
                           autocorrect: false,
@@ -146,7 +148,10 @@ class _LoginRegisterPageState extends State<LoginRegisterPage> {
                                             password: passwordController.text);
                                   }
                                 },
-                          child: const Text("Proceed"),
+                          child: Text("Proceed",
+                              style: TextStyle(
+                                  color:
+                                      context.watch<ThemeModel>().fontColor)),
                         ),
                       ),
                     ),

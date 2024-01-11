@@ -213,7 +213,9 @@ class _EditWorkoutState extends State<EditWorkout> {
                             });
                           }
                         },
-                        child: const Text("Add New Exercise"),
+                        child: Text("Add New Exercise",
+                            style: TextStyle(
+                                color: context.watch<ThemeModel>().fontColor)),
                       ),
                     ),
                   ),

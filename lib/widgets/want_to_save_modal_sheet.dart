@@ -35,7 +35,9 @@ class WantToSaveModalSheet extends StatelessWidget {
                       onPressed: () {
                         Navigator.pop(context, WantToSaveDecision.cancel);
                       },
-                      child: const Text("Cancel"),
+                      child: Text("Cancel",
+                          style: TextStyle(
+                              color: context.watch<ThemeModel>().fontColor)),
                     ),
                   ),
                   Padding(
@@ -48,7 +50,9 @@ class WantToSaveModalSheet extends StatelessWidget {
                         onPressed: () {
                           Navigator.pop(context, WantToSaveDecision.discard);
                         },
-                        child: const Text("Discard"),
+                        child: Text("Discard",
+                            style: TextStyle(
+                                color: context.watch<ThemeModel>().fontColor)),
                       ),
                     ),
                   ),
@@ -60,7 +64,9 @@ class WantToSaveModalSheet extends StatelessWidget {
                       onPressed: () {
                         Navigator.pop(context, WantToSaveDecision.save);
                       },
-                      child: const Text("Save"),
+                      child: Text("Save",
+                          style: TextStyle(
+                              color: context.watch<ThemeModel>().fontColor)),
                     ),
                   ),
                 ],

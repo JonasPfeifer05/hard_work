@@ -38,7 +38,9 @@ class YesNoModalSheet extends StatelessWidget {
                         onPressed: () {
                           Navigator.pop(context, YesNoDecision.no);
                         },
-                        child: const Text("No"),
+                        child: Text("No",
+                            style: TextStyle(
+                                color: context.watch<ThemeModel>().fontColor)),
                       ),
                     ),
                   ),
@@ -52,7 +54,9 @@ class YesNoModalSheet extends StatelessWidget {
                         onPressed: () {
                           Navigator.pop(context, YesNoDecision.yes);
                         },
-                        child: const Text("Yes"),
+                        child: Text("Yes",
+                            style: TextStyle(
+                                color: context.watch<ThemeModel>().fontColor)),
                       ),
                     ),
                   ),

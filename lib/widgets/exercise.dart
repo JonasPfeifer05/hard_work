@@ -90,7 +90,9 @@ class Exercise extends StatelessWidget {
                       backgroundColor: context.watch<ThemeModel>().highlight!,
                     ),
                     onPressed: onAddSet,
-                    child: const Text("Add Set"),
+                    child: Text("Add Set",
+                        style: TextStyle(
+                            color: context.watch<ThemeModel>().fontColor)),
                   ),
                 ),
               )

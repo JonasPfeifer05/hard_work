@@ -107,7 +107,9 @@ class _SelectExerciseModalSheetState extends State<SelectExerciseModalSheet> {
                         onPressed: () {
                           Navigator.pop(context);
                         },
-                        child: const Text("Cancel"),
+                        child: Text("Cancel",
+                            style: TextStyle(
+                                color: context.watch<ThemeModel>().fontColor)),
                       ),
                     ),
                   ),
@@ -122,7 +124,9 @@ class _SelectExerciseModalSheetState extends State<SelectExerciseModalSheet> {
                         onPressed: () {
                           Navigator.pop(context, selected);
                         },
-                        child: const Text("Add"),
+                        child: Text("Add",
+                            style: TextStyle(
+                                color: context.watch<ThemeModel>().fontColor)),
                       ),
                     ),
                   ),
