@@ -27,7 +27,7 @@ class WantToSaveModalSheet extends StatelessWidget {
               Row(
                 children: [
                   SizedBox(
-                    width: 90,
+                    width: 100,
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
                           backgroundColor:
@@ -43,7 +43,7 @@ class WantToSaveModalSheet extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: SizedBox(
-                      width: 90,
+                      width: 100,
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.redAccent),
@@ -57,7 +57,7 @@ class WantToSaveModalSheet extends StatelessWidget {
                     ),
                   ),
                   SizedBox(
-                    width: 90,
+                    width: 100,
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.lightGreen),
