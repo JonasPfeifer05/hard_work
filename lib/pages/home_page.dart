@@ -62,7 +62,8 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       backgroundColor: context.watch<ThemeModel>().backgroundOne,
       appBar: AppBar(
-        leading: const Icon(Icons.fitness_center),
+        leading: Icon(Icons.fitness_center,
+            color: context.watch<ThemeModel>().fontColor),
         backgroundColor: context.watch<ThemeModel>().backgroundTwo,
         actions: [
           IconButton(
