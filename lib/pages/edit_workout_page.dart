@@ -76,7 +76,8 @@ class _EditWorkoutState extends State<EditWorkout> {
           setHistories.add(SetHistory(setData));
         }
 
-        fetchedExercises.add(ExerciseData(exercise.key!, setHistories));
+        var name = exercise.key!.split("_")[1];
+        fetchedExercises.add(ExerciseData(name, setHistories));
       }
       exercises = fetchedExercises;
 
@@ -97,15 +98,19 @@ class _EditWorkoutState extends State<EditWorkout> {
 
     var ref = database.forPath(path);
     await ref.set({"_": "_"});
+    var count = 0;
     for (var exercise in exercises) {
+      count++;
+
       for (var set in exercise.sets) {
-        if (set.history.last.reps == -1) {
+        if (set.history.lastOrNull?.reps == -1) {
           set.history.removeLast();
         }
       }
 
+      var name = "${count}_${exercise.name}";
       ref.update({
-        exercise.name: {"_": jsonEncode(exercise.sets)}
+        name: {"_": jsonEncode(exercise.sets)}
       });
     }
   }
@@ -208,7 +213,9 @@ class _EditWorkoutState extends State<EditWorkout> {
                     },
                     onAddSet: () {
                       setState(() {
-                        exercises[index].sets.add(SetHistory([]));
+                        exercises[index]
+                            .sets
+                            .add(SetHistory([SetData(-1, -1)]));
                       });
                     },
                     onDelete: () {

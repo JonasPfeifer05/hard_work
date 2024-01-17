@@ -82,7 +82,7 @@ class SetIndicator extends StatelessWidget {
         Expanded(
           flex: 10,
           child: Text(
-            setHistory!.history.length == 1
+            setHistory!.history.length <= 1
                 ? "/"
                 : "${setHistory!.history[setHistory!.history.length - 2].reps}x${setHistory!.history[setHistory!.history.length - 2].weight}kg",
             textAlign: TextAlign.center,

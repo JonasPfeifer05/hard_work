@@ -50,7 +50,7 @@ class _HomePageState extends State<HomePage> {
           workout.key!,
           workout.children
               .where((e) => e.key != "_")
-              .map((e) => e.key!)
+              .map((e) => e.key!.split("_")[1])
               .toList()));
     }
 
