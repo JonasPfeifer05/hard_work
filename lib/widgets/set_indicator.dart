@@ -7,8 +7,18 @@ import '../services/theme_model.dart';
 class SetIndicator extends StatelessWidget {
   final SetHistory? setHistory;
   final VoidCallback? onDelete;
+  final bool? disabled;
+  final Function(double, int)? onChange;
 
-  const SetIndicator({super.key, this.setHistory, this.onDelete});
+  double? weight;
+  int? reps;
+
+  SetIndicator(
+      {super.key,
+      this.setHistory,
+      this.onDelete,
+      this.disabled,
+      this.onChange});
 
   @override
   Widget build(BuildContext context) {
@@ -72,9 +82,9 @@ class SetIndicator extends StatelessWidget {
         Expanded(
           flex: 10,
           child: Text(
-            setHistory!.history.isEmpty
+            setHistory!.history.length == 1
                 ? "/"
-                : "${setHistory!.history.last.reps}x${setHistory!.history.last.weight}kg",
+                : "${setHistory!.history[setHistory!.history.length - 2].reps}x${setHistory!.history[setHistory!.history.length - 2].weight}kg",
             textAlign: TextAlign.center,
             style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                 color: context.watch<ThemeModel>().fontColor!.withAlpha(80)),
@@ -85,7 +95,13 @@ class SetIndicator extends StatelessWidget {
           child: FractionallySizedBox(
             widthFactor: 0.80,
             child: TextField(
-              readOnly: true,
+              onChanged: (value) {
+                weight = double.parse(value);
+                if (onChange != null && weight != null && reps != null) {
+                  onChange!(weight!, reps!);
+                }
+              },
+              readOnly: disabled ?? true,
               keyboardType: TextInputType.number,
               decoration: InputDecoration(
                 focusedBorder: UnderlineInputBorder(
@@ -105,7 +121,13 @@ class SetIndicator extends StatelessWidget {
           child: FractionallySizedBox(
             widthFactor: 0.80,
             child: TextField(
-              readOnly: true,
+              onChanged: (value) {
+                reps = int.parse(value);
+                if (onChange != null && weight != null && reps != null) {
+                  onChange!(weight!, reps!);
+                }
+              },
+              readOnly: disabled ?? true,
               keyboardType: TextInputType.number,
               decoration: InputDecoration(
                 focusedBorder: UnderlineInputBorder(

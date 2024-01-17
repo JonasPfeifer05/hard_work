@@ -10,6 +10,7 @@ class Exercise extends StatelessWidget {
   final VoidCallback onAddSet;
   final Function(int) onDeleteSet;
   final VoidCallback onDelete;
+  final bool disabled;
 
   const Exercise({
     super.key,
@@ -17,6 +18,7 @@ class Exercise extends StatelessWidget {
     required this.onAddSet,
     required this.onDeleteSet,
     required this.onDelete,
+    required this.disabled,
   });
 
   @override
@@ -73,9 +75,15 @@ class Exercise extends StatelessWidget {
                           onDelete: () {
                             onDeleteSet(index);
                           },
+                          disabled: disabled,
+                          onChange: (weight, reps) {
+                            var data = exerciseData.sets[index].history.last;
+                            data.weight = weight;
+                            data.reps = reps;
+                          },
                         ),
                       ),
-                      const SetIndicator(),
+                      SetIndicator(),
                       0,
                     ),
                   ),

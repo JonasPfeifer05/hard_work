@@ -28,6 +28,7 @@ class _EditWorkoutState extends State<EditWorkout> {
   bool loading = true;
   List<ExerciseData> exercises = [];
   String workoutName = "Loading...";
+  bool workoutStarted = false;
 
   @override
   void initState() {
@@ -70,6 +71,8 @@ class _EditWorkoutState extends State<EditWorkout> {
             setData.add(SetData(weight, reps));
           }
 
+          setData.add(SetData(-1, -1));
+
           setHistories.add(SetHistory(setData));
         }
 
@@ -94,9 +97,15 @@ class _EditWorkoutState extends State<EditWorkout> {
 
     var ref = database.forPath(path);
     await ref.set({"_": "_"});
-    for (var value in exercises) {
+    for (var exercise in exercises) {
+      for (var set in exercise.sets) {
+        if (set.history.last.reps == -1) {
+          set.history.removeLast();
+        }
+      }
+
       ref.update({
-        value.name: {"_": jsonEncode(value.sets)}
+        exercise.name: {"_": jsonEncode(exercise.sets)}
       });
     }
   }
@@ -128,23 +137,28 @@ class _EditWorkoutState extends State<EditWorkout> {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () async {
-            var decision = (await showModalBottomSheet(
-              context: context,
-              builder: (context) {
-                return const WantToSaveModalSheet();
-              },
-            )) as WantToSaveDecision?;
+          disabledColor: const Color.fromARGB(255, 75, 75, 75),
+          icon: const Icon(
+            Icons.arrow_back,
+          ),
+          onPressed: workoutStarted
+              ? null
+              : () async {
+                  var decision = (await showModalBottomSheet(
+                    context: context,
+                    builder: (context) {
+                      return const WantToSaveModalSheet();
+                    },
+                  )) as WantToSaveDecision?;
 
-            if (decision == WantToSaveDecision.discard) {
-              Navigator.pop(context);
-            } else if (decision == WantToSaveDecision.save) {
-              saveWorkout();
-              await Future.delayed(const Duration(milliseconds: 500));
-              Navigator.pop(context);
-            }
-          },
+                  if (decision == WantToSaveDecision.discard) {
+                    Navigator.pop(context);
+                  } else if (decision == WantToSaveDecision.save) {
+                    saveWorkout();
+                    await Future.delayed(const Duration(milliseconds: 500));
+                    Navigator.pop(context);
+                  }
+                },
         ),
         iconTheme: IconThemeData(color: context.watch<ThemeModel>().fontColor),
         titleTextStyle: Theme.of(context)
@@ -153,6 +167,19 @@ class _EditWorkoutState extends State<EditWorkout> {
             .copyWith(color: context.watch<ThemeModel>().fontColor),
         backgroundColor: context.watch<ThemeModel>().backgroundTwo,
         actions: [
+          FractionallySizedBox(
+              heightFactor: 0.6,
+              child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: workoutStarted ? Colors.red : Colors.green,
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      workoutStarted = !workoutStarted;
+                    });
+                  },
+                  child:
+                      Text(workoutStarted ? "Stop Workout" : "Start Workout"))),
           IconButton(
             onPressed: deleteWorkout,
             icon: const Icon(Icons.delete_forever),
@@ -189,7 +216,7 @@ class _EditWorkoutState extends State<EditWorkout> {
                         exercises.removeAt(index);
                       });
                     },
-                  )
+                    disabled: !workoutStarted)
                 : Padding(
                     padding: const EdgeInsets.symmetric(vertical: 25.0),
                     child: FractionallySizedBox(

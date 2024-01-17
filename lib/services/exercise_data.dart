@@ -16,8 +16,8 @@ class SetHistory {
 }
 
 class SetData {
-  final double weight;
-  final int reps;
+  double weight;
+  int reps;
 
   SetData(this.weight, this.reps);
 
